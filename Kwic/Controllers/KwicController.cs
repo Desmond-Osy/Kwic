@@ -26,8 +26,11 @@ namespace Kwic.Controllers
                .Register(new Alphabetizer());
 
             //Start pipeline processing
+            var watch = new System.Diagnostics.Stopwatch();
+            watch.Start();
             var agentsStatus_1 = agentStatusPipeline.Process(agentsStatus);
-
+            watch.Stop();
+            Console.Out.WriteLine(watch.ElapsedMilliseconds);
             return new ObjectResult(agentsStatus_1);
         }
 

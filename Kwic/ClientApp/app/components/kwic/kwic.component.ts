@@ -10,9 +10,11 @@ import { Http } from '@angular/http';
 export class KwicComponent {
     input: String = "";
     output: String = "";
+    architecture_type: String = "";
     list: String[] = this.input.split("\n");
     jsonInput = {
-        "input": this.input.trim()
+        "input": this.input.trim(),
+        "architecture_type": this.architecture_type
     }
 
     constructor(private http: Http, @Inject('BASE_URL') private baseUrl: string) {
@@ -22,10 +24,11 @@ export class KwicComponent {
     public runKwic() {  
         //update the input field with data from control
         this.jsonInput.input = this.input.trim();
+        console.log(this.jsonInput.architecture_type);
 
         this.http.post(this.baseUrl + 'api/Kwic', this.jsonInput).subscribe(result => {
             if (result.status == 200) {
-                console.log(result.text);
+                //console.log(result.text);
                 var res = result.text().toString();
 
                 res = res.replace("[", "");
