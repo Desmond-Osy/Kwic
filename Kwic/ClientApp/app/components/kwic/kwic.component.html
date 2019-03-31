@@ -12,29 +12,62 @@
         <label for="exampleFormControlTextarea1">Output</label>
         <textarea class="form-control" id="exampleFormControlTextview1" rows="9">{{ output }} </textarea>
     </div>
-    <div>
-        <label class="radio-inline"><input type="radio" name="optradio" checked [(ngModel)]="architecture_type" >Pipe-Filter</label>
-        <label class="radio-inline"><input type="radio" name="optradio" [(ngModel)]="architecture_type" >Shared-Data</label>
-        <label class="radio-inline"><input type="radio" name="optradio" [(ngModel)]="architecture_type" >Both</label>
-        <button (click)="runKwic()" class="btn btn-primary" style="float:right">Run</button>
-        <br />
 
+    <div class="btn-group" id="ProfitCodes">
+        <div class="radio">
+            <label>
+                <input type="radio"
+                       class="radio-inline"
+                       value="1"
+                       [checked]='architecture_type === "1"'
+                       [(ngModel)]="architecture_type"
+                       (change)="onArchitechtureChange(1)"
+                       id="point1"
+                       name="ProfitCode"><small>Pipe-Filter</small>
+            </label>
+        </div>
+        <div class="radio">
+            <label>
+                <input type="radio"
+                       class="radio-inline"
+                       [(ngModel)]="architecture_type"
+                       [checked]='architecture_type === "2"'
+                       (change)="onArchitechtureChange(2)"
+                       value="2"
+                       id="point2"
+                       name="ProfitCode"><small>Shared Data</small>
+            </label>
+        </div>
+        <div class="radio">
+            <label>
+                <input type="radio"
+                       class="radio-inline"
+                       [(ngModel)]="architecture_type"
+                       [checked]='architecture_type === "3"'
+                       (change)="onArchitechtureChange(3)"
+                       value="3"
+                       id="point3"
+                       name="ProfitCode"><small>Both</small>
+            </label>
+        </div>
     </div>
 
-    <div class="row">
-        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-            <div class="form-group">
-                <label for="usr">Pipe-Filter(ms)</label>
-                <input type="text" class="form-control"  id="usr">
-            </div>
-        </div>
-        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-            <div>
+       <button (click)="runKwic()" class="btn btn-primary" style="float:right">Run</button>
 
-                <label for="pwd">SharedData(ms)</label>
-                <input type="password" class="form-control"  id="pwd">
+        <div class="row">
+            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                <div class="form-group">
+                    <label for="usr">Pipe-Filter(ms)</label>
+                    <input type="text" class="form-control" id="usr">
+                </div>
+            </div>
+            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                <div>
+
+                    <label for="pwd">SharedData(ms)</label>
+                    <input type="password" class="form-control" id="pwd">
+                </div>
             </div>
         </div>
-    </div>
 </form>
 

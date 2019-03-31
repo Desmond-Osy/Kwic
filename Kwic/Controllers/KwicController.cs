@@ -18,6 +18,8 @@ namespace Kwic.Controllers
             //Get the Agents from repository
             List<string> agentsStatus = value["input"].ToString().Split('\n').ToList();
 
+            String architechtureType = value["architechture_type"].ToString();
+
             //Construct the Pipeline object
             KwicPipeLine agentStatusPipeline = new KwicPipeLine();
 
