@@ -15,25 +15,52 @@ namespace Kwic.Controllers
         [HttpPost]
         public IActionResult Post([FromBody]JObject value)
         {
-            //Get the Agents from repository
-            List<string> agentsStatus = value["input"].ToString().Split('\n').ToList();
+            IEnumerable<string> result = null;  //will later be added to json response
+            String input = value["input"].ToString();
+            char [] charInput = input.ToCharArray();
+            
 
-            String architechtureType = value["architechture_type"].ToString();
+            //Check which architecture to use 
+            int architechtureType = Convert.ToInt32(value["architechture_type"].ToString());
 
-            //Construct the Pipeline object
-            KwicPipeLine agentStatusPipeline = new KwicPipeLine();
+            if (architechtureType == 1)
+            {
+                //get input
+                List<string> agentsStatus = input.Split('\n').ToList();
 
-            //Register the filters to be executed
-            agentStatusPipeline.Register(new CircularShift())
-               .Register(new Alphabetizer());
+                //Pipe - Filter architecture
+                //Construct the Pipeline object
+                KwicPipeLine agentStatusPipeline = new KwicPipeLine();
 
-            //Start pipeline processing
-            var watch = new System.Diagnostics.Stopwatch();
-            watch.Start();
-            var agentsStatus_1 = agentStatusPipeline.Process(agentsStatus);
-            watch.Stop();
-            Console.Out.WriteLine(watch.ElapsedMilliseconds);
-            return new ObjectResult(agentsStatus_1);
+                //Register the filters to be executed
+                agentStatusPipeline.Register(new CircularShift())
+                   .Register(new Alphabetizer());
+
+                //Start pipeline processing
+                var watch = new System.Diagnostics.Stopwatch();
+                watch.Start();
+                result = agentStatusPipeline.Process(agentsStatus);
+                watch.Stop();
+                Console.Out.WriteLine(watch.ElapsedMilliseconds);
+            }
+            else if (architechtureType == 2)
+            {
+                //Shared Data Architecture
+
+                OutputProcessor op = new OutputProcessor();
+                op.SetInput(charInput);
+
+                CircularShift_shared_data circularShift_Shared_Data = new CircularShift_shared_data();
+                Alphabetizer_shared_data alphabetizer_Shared_Data = new Alphabetizer_shared_data();
+                FilterNoise filterNoise = new FilterNoise();
+
+                List<Pair> pairs = circularShift_Shared_Data.shift(charInput);
+                pairs = alphabetizer_Shared_Data.alphabetize(pairs, charInput);
+                
+                result = filterNoise.filter(op.GetStringListFromIndices(pairs));
+            }
+
+            return new ObjectResult(result);
         }
 
     }
