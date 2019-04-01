@@ -7,11 +7,12 @@ namespace Kwic.Controllers
 {
     public class KwicOrder_Shared_Data : IComparer<Pair>
     {
-        private readonly char[] _input;
+        private char[] charInput;
+        char space = ' ', carriage_return = '\r', new_line = '\n';
 
         public KwicOrder_Shared_Data(char[] input)
         {
-            _input = input;
+            charInput = input;
         }
 
         public int Compare(Pair a, Pair b)
@@ -26,11 +27,11 @@ namespace Kwic.Controllers
 
             while (true)
             {
-                while (_input[indexA] == '\r' || _input[indexA] == '\n' || _input[indexA] == ' ')
+                while (charInput[indexA] == carriage_return || charInput[indexA] == new_line || charInput[indexA] == space)
                 {
                     indexA = GoNextIndex(indexA, a);
                 }
-                while (_input[indexB] == '\r' || _input[indexB] == '\n' || _input[indexB] == ' ')
+                while (charInput[indexB] == carriage_return || charInput[indexB] == new_line || charInput[indexB] == space)
                 {
                     indexB = GoNextIndex(indexB, b);
                 }
@@ -40,19 +41,18 @@ namespace Kwic.Controllers
                     return 0;
                 }
 
-                if (_input[indexA] == _input[indexB])
+                if (charInput[indexA] == charInput[indexB])
                 {
                     indexA = GoNextIndex(indexA, a);
                     indexB = GoNextIndex(indexB, b);
                 }
                 else
                 {
-                    int comparisonInteger = char.ToUpperInvariant(_input[indexA]).CompareTo(char.ToUpperInvariant(_input[indexB]));
+                    int comparisonInteger = char.ToUpperInvariant(charInput[indexA]).CompareTo(char.ToUpperInvariant(charInput[indexB]));
 
-                    // same character
-                    if (char.ToUpperInvariant(_input[indexA]) == char.ToUpperInvariant(_input[indexB]))
+                    if (char.ToUpperInvariant(charInput[indexA]) == char.ToUpperInvariant(charInput[indexB]))
                     {
-                        comparisonInteger = _input[indexA].CompareTo(_input[indexB]);
+                        comparisonInteger = charInput[indexA].CompareTo(charInput[indexB]);
                         return comparisonInteger * -1;
                     }
 
@@ -67,7 +67,7 @@ namespace Kwic.Controllers
             var nextIndex = currentIndex + 1;
 
             // if at the end of the line, go to the front
-            if (nextIndex >= _input.Length || _input[nextIndex] == '\r' || _input[nextIndex] == '\n')
+            if (nextIndex >= charInput.Length || charInput[nextIndex] == carriage_return || charInput[nextIndex] == new_line)
             {
                 return index.getFirst();
             }

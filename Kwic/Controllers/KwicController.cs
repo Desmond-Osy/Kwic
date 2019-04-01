@@ -23,6 +23,8 @@ namespace Kwic.Controllers
             //Check which architecture to use 
             int architechtureType = Convert.ToInt32(value["architechture_type"].ToString());
 
+            
+
             if (architechtureType == 1)
             {
                 //get input
@@ -54,10 +56,14 @@ namespace Kwic.Controllers
                 Alphabetizer_shared_data alphabetizer_Shared_Data = new Alphabetizer_shared_data();
                 FilterNoise filterNoise = new FilterNoise();
 
+                var watch = new System.Diagnostics.Stopwatch();
+                watch.Start();
                 List<Pair> pairs = circularShift_Shared_Data.shift(charInput);
                 pairs = alphabetizer_Shared_Data.alphabetize(pairs, charInput);
-                
+                watch.Stop();
                 result = filterNoise.filter(op.GetStringListFromIndices(pairs));
+                
+                Console.Out.WriteLine(watch.ElapsedMilliseconds);
             }
 
             return new ObjectResult(result);

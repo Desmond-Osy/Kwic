@@ -7,7 +7,6 @@ import { RouterModule } from '@angular/router';
 import { AppComponent } from './components/app/app.component';
 import { NavMenuComponent } from './components/navmenu/navmenu.component';
 import { HomeComponent } from './components/home/home.component';
-import { FetchDataComponent } from './components/fetchdata/fetchdata.component';
 import { CounterComponent } from './components/counter/counter.component';
 import { KwicComponent } from './components/kwic/kwic.component';
 
@@ -17,7 +16,6 @@ import { KwicComponent } from './components/kwic/kwic.component';
         NavMenuComponent,
         CounterComponent,
         KwicComponent,
-        FetchDataComponent,
         HomeComponent
     ],
     imports: [
@@ -28,7 +26,6 @@ import { KwicComponent } from './components/kwic/kwic.component';
             { path: '', redirectTo: 'home', pathMatch: 'full' },
             { path: 'home', component: HomeComponent },
             { path: 'counter', component: CounterComponent },
-            { path: 'fetch-data', component: FetchDataComponent },
             { path: 'kwic', component: KwicComponent },
             { path: '**', redirectTo: 'home' }
         ])

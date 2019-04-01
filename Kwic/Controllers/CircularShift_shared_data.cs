@@ -9,41 +9,42 @@ namespace Kwic.Controllers
     {
         public List<Pair> shift(char[] input)
         {
-            var offsets = new List<Pair>();
-            var currentOffset = 0;
-            var first = 0; 
-
+            
+            int offset = 0;
+            int first = 0; 
+            List<Pair> result = new List<Pair>();
+            char space = ' ', carriage_return = '\r', new_line = '\n';
 
 
             for (int i = 0; i < input.Length; i++)
             {
-                if (input[i] == ' ')
+                if (input[i] == space)
                 {
-                    offsets.Add(new Pair(first, currentOffset));
-                    while (i < input.Length && (input[i] == '\r' || input[i] == ' ' || input[i] == '\n'))
+                    result.Add(new Pair(first, offset));
+                    while (i < input.Length && (input[i] == carriage_return || input[i] == space || input[i] == new_line))
                     {
                         i++;
                     }
 
-                    currentOffset = i - first;
+                    offset = i - first;
                 }
   
-                else if (input[i] == '\r' || input[i] == '\n')
+                else if (input[i] == carriage_return || input[i] == new_line)
                 {
-                    offsets.Add(new Pair(first, currentOffset));
-                    while (i < input.Length && (input[i] == '\r' || input[i] == ' ' || input[i] == '\n'))
+                    result.Add(new Pair(first, offset));
+                    while (i < input.Length && (input[i] == carriage_return || input[i] == space || input[i] == new_line))
                     {
                         i++;
                     }
 
                     first = i;
-                    currentOffset = 0;
+                    offset = 0;
                 }
 
             }
 
-            offsets.Add(new Pair(first, currentOffset));
-            return offsets;
+            result.Add(new Pair(first, offset));
+            return result;
         }
 
     }

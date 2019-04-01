@@ -8,11 +8,12 @@ namespace Kwic.Controllers
 {
     public class OutputProcessor
     {
-        private char[] _input;
+        private char[] charInput;
+        char space = ' ', carriage_return = '\r', new_line = '\n';
 
         public void SetInput(char[] input)
         {
-            _input = input;
+            this.charInput = input;
         }
 
         public List<string> GetStringListFromIndices(IEnumerable<Pair> indices)
@@ -47,20 +48,20 @@ namespace Kwic.Controllers
             var i = first + offset;
             var k = first;
 
-            while (i != _input.Length && _input[i] != '\r' && _input[i] != '\n')
+            while (i != charInput.Length && charInput[i] != carriage_return && charInput[i] != new_line)
             {
-                stringBuilder.Append(_input[i]);
+                stringBuilder.Append(charInput[i]);
                 i++;
             }
 
             if (offset != 0)
             {
-                stringBuilder.Append(' ');
+                stringBuilder.Append(space);
             }
 
             while (k < first + offset - 1)
             {
-                stringBuilder.Append(_input[k]);
+                stringBuilder.Append(charInput[k]);
                 k++;
             }
             return stringBuilder.ToString();
