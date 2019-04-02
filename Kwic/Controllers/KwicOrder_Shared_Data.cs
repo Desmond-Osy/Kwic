@@ -29,11 +29,11 @@ namespace Kwic.Controllers
             {
                 while (charInput[indexA] == carriage_return || charInput[indexA] == new_line || charInput[indexA] == space)
                 {
-                    indexA = GoNextIndex(indexA, a);
+                    indexA = goNext(indexA, a);
                 }
                 while (charInput[indexB] == carriage_return || charInput[indexB] == new_line || charInput[indexB] == space)
                 {
-                    indexB = GoNextIndex(indexB, b);
+                    indexB = goNext(indexB, b);
                 }
 
                 if (!firstIteration && indexA == indexAStart && indexB == indexBStart)
@@ -43,8 +43,8 @@ namespace Kwic.Controllers
 
                 if (charInput[indexA] == charInput[indexB])
                 {
-                    indexA = GoNextIndex(indexA, a);
-                    indexB = GoNextIndex(indexB, b);
+                    indexA = goNext(indexA, a);
+                    indexB = goNext(indexB, b);
                 }
                 else
                 {
@@ -62,11 +62,10 @@ namespace Kwic.Controllers
                 firstIteration = false;
             }
         }
-        private int GoNextIndex(int currentIndex, Pair index)
+        private int goNext(int currentIndex, Pair index)
         {
             var nextIndex = currentIndex + 1;
 
-            // if at the end of the line, go to the front
             if (nextIndex >= charInput.Length || charInput[nextIndex] == carriage_return || charInput[nextIndex] == new_line)
             {
                 return index.getFirst();
